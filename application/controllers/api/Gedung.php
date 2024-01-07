@@ -14,7 +14,7 @@ class Gedung extends Auth
     {
         $page = $this->input->get('page') ? $this->input->get('page') : 1;
         $limit = $this->input->get('limit') ? $this->input->get('limit') : 10;
-        $search = $this->input->get('search');
+        $search = urldecode($this->input->get('search'));
         
         $offset = ($page - 1) * $limit;
         
