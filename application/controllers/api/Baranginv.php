@@ -258,9 +258,23 @@ class Baranginv extends Auth
                         $loadexcel = $excelreader->load($destination);
                         $sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
                         
+                        // Array baru untuk menyimpan data unik berdasarkan 'kode_inv'
+                        $uniqueData = [];
+                        // Loop melalui data yang diberikan
+                        foreach($sheet as $item)
+                        {
+                            // Gunakan 'kode_inv' sebagai kunci array
+                            $kode_inv = $item['A'];
+                            // Jika 'kode_inv' belum ada dalam array $uniqueData, tambahkan data tersebut
+                            if(!isset($uniqueData[$kode_inv]))
+                            {
+                                $uniqueData[$kode_inv] = $item;
+                            }
+                        }
+
                         $data = array();		
                         $numrow = 1;
-                        foreach($sheet as $row)
+                        foreach($uniqueData as $row)
                         {
                             // Cek $numrow apakah lebih dari 1
                             // Artinya karena baris pertama adalah nama-nama kolom
