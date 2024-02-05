@@ -245,9 +245,23 @@ class Baranghp extends Auth
                         $loadexcel = $excelreader->load($destination);
                         $sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
                         
+                        // Array baru untuk menyimpan data unik berdasarkan 'kode_hp'
+                        $uniqueData = [];
+                        // Loop melalui data yang diberikan
+                        foreach($sheet as $item)
+                        {
+                            // Gunakan 'kode_hp' sebagai kunci array
+                            $kode_hp = $item['A'];
+                            // Jika 'kode_hp' belum ada dalam array $uniqueData, tambahkan data tersebut
+                            if(!isset($uniqueData[$kode_hp]))
+                            {
+                                $uniqueData[$kode_hp] = $item;
+                            }
+                        }
+
                         $data = array();		
                         $numrow = 1;
-                        foreach($sheet as $row)
+                        foreach($uniqueData as $row)
                         {
                             // Cek $numrow apakah lebih dari 1
                             // Artinya karena baris pertama adalah nama-nama kolom
